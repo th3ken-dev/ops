@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 Sana Bir Sorum Var 💕</title>
+    <meta name="description" content="Sana özel hazırladığım bir sürpriz var...">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Sparkle particles -->
+    <div class="sparkles" id="sparkles"></div>
+
+    <!-- QUESTION SCREEN -->
+    <div class="screen active" id="questionScreen">
+        <div class="envelope-wrapper" id="envelopeWrapper">
+            <div class="envelope" id="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-body">
+                    <div class="letter">💌</div>
+                </div>
+            </div>
+            <p class="tap-text">Zarfı aç Rabia 💕</p>
+        </div>
+
+        <div class="question-content hidden" id="questionContent">
+            <div class="heart-icon">
+                <svg viewBox="0 0 100 100" class="pulse-heart">
+                    <path d="M50 88 C25 65, 0 50, 0 30 C0 12, 12 0, 28 0 C38 0, 46 6, 50 14 C54 6, 62 0, 72 0 C88 0, 100 12, 100 30 C100 50, 75 65, 50 88Z" fill="url(#heartGrad)"/>
+                    <defs>
+                        <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff6b9d"/>
+                            <stop offset="100%" style="stop-color:#c44569"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h1 class="question-title">Sana bir sorum var...</h1>
+            <p class="question-text">Beni Seviyor musun?</p>
+            
+            <div class="buttons-container">
+                <button class="btn btn-yes" id="btnYes" onclick="showRose()">
+                    <span class="btn-icon">💖</span>
+                    <span>Evet, Seviyorum!</span>
+                </button>
+                <button class="btn btn-no" id="btnNo">
+                    <span class="btn-icon">💔</span>
+                    <span>Hayır</span>
+                </button>
+            </div>
+            <p class="hint-text" id="hintText"></p>
+        </div>
+    </div>
+
+    <!-- ROSE SCREEN -->
+    <div class="screen" id="roseScreen">
+        <div class="rose-container">
+            <!-- Falling petals -->
+            <div class="petals-rain" id="petalsRain"></div>
+            
+            <div class="rose-wrapper">
+                <div class="glow-circle"></div>
+                <svg class="rose-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Stem -->
+                    <path class="stem" d="M200 500 L200 280" stroke="#2d8a4e" stroke-width="8" fill="none" stroke-linecap="round"/>
+                    
+                    <!-- Left leaf -->
+                    <g class="leaf leaf-left">
+                        <path d="M200 400 Q160 380, 140 350 Q150 390, 200 400Z" fill="#3da35d"/>
+                        <path d="M200 400 Q170 385, 155 365" stroke="#2d8a4e" stroke-width="1.5" fill="none"/>
+                    </g>
+                    
+                    <!-- Right leaf -->
+                    <g class="leaf leaf-right">
+                        <path d="M200 360 Q240 340, 260 310 Q250 350, 200 360Z" fill="#3da35d"/>
+                        <path d="M200 360 Q230 345, 245 325" stroke="#2d8a4e" stroke-width="1.5" fill="none"/>
+                    </g>
+                    
+                    <!-- Rose petals - outer layer -->
+                    <g class="petal-group">
+                        <ellipse class="petal petal-1" cx="200" cy="220" rx="70" ry="55" fill="#f8f9fa" opacity="0.9" transform="rotate(-20, 200, 220)"/>
+                        <ellipse class="petal petal-2" cx="200" cy="220" rx="70" ry="55" fill="#ffffff" opacity="0.95" transform="rotate(25, 200, 220)"/>
+                        <ellipse class="petal petal-3" cx="200" cy="215" rx="65" ry="50" fill="#f1f3f5" opacity="0.9" transform="rotate(-45, 200, 215)"/>
+                        <ellipse class="petal petal-4" cx="200" cy="215" rx="65" ry="50" fill="#ffffff" opacity="0.85" transform="rotate(50, 200, 215)"/>
+                        
+                        <!-- Middle layer -->
+                        <ellipse class="petal petal-5" cx="200" cy="210" rx="50" ry="40" fill="#e9ecef" opacity="0.9" transform="rotate(-10, 200, 210)"/>
+                        <ellipse class="petal petal-6" cx="200" cy="210" rx="50" ry="40" fill="#f8f9fa" opacity="0.9" transform="rotate(35, 200, 210)"/>
+                        <ellipse class="petal petal-7" cx="200" cy="208" rx="45" ry="35" fill="#fff0f3" opacity="0.85" transform="rotate(-30, 200, 208)"/>
+                        
+                        <!-- Inner layer -->
+                        <ellipse class="petal petal-8" cx="200" cy="205" rx="35" ry="28" fill="#ffe3e8" opacity="0.9" transform="rotate(15, 200, 205)"/>
+                        <ellipse class="petal petal-9" cx="200" cy="203" rx="25" ry="20" fill="#fff0f3" opacity="0.9" transform="rotate(-5, 200, 203)"/>
+                        
+                        <!-- Center -->
+                        <circle class="petal petal-center" cx="200" cy="200" r="12" fill="#ffe3e8" opacity="0.95"/>
+                    </g>
+                    
+                    <!-- Sparkle on rose -->
+                    <circle class="rose-sparkle" cx="175" cy="195" r="3" fill="white" opacity="0.8"/>
+                    <circle class="rose-sparkle delay-1" cx="220" cy="205" r="2" fill="white" opacity="0.6"/>
+                    <circle class="rose-sparkle delay-2" cx="195" cy="185" r="2.5" fill="white" opacity="0.7"/>
+                </svg>
+            </div>
+            
+            <div class="love-message">
+                <h2 class="love-title">Ben de Seni Çok Seviyorum! 💕</h2>
+                <p class="love-subtitle">Bu beyaz gül senin kadar saf ve güzel olamaz ama<br>sana olan aşkımı anlatmaya çalışsın... ki yarın sana vercem beyaz gül :) 🤍</p>
+                <div class="love-hearts">
+                    <span>🤍</span><span>💖</span><span>🤍</span><span>💖</span><span>🤍</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
