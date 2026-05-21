@@ -1,0 +1,673 @@
+/* ============================================
+   RESET & BASE
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    background-size: 400% 400%;
+    animation: gradientShift 12s ease infinite;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ============================================
+   SCREENS
+   ============================================ */
+.screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    z-index: 10;
+    padding: 20px;
+    overflow-y: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ============================================
+   FLOATING HEARTS BACKGROUND
+   ============================================ */
+.hearts-container {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.floating-heart {
+    position: absolute;
+    bottom: -60px;
+    font-size: 24px;
+    opacity: 0;
+    animation: floatUp linear forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translateY(0) rotate(0deg) scale(0.5);
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-110vh) rotate(360deg) scale(1);
+    }
+}
+
+/* ============================================
+   SPARKLE PARTICLES
+   ============================================ */
+.sparkles {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================
+   ENVELOPE
+   ============================================ */
+.envelope-wrapper {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    animation: envelopeBounce 2s ease-in-out infinite;
+}
+
+@keyframes envelopeBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.envelope {
+    width: 180px;
+    height: 130px;
+    position: relative;
+    transition: transform 0.5s ease;
+}
+
+.envelope:hover {
+    transform: scale(1.1);
+}
+
+.envelope-body {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #ff6b9d, #c44569);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 40px rgba(255, 107, 157, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.envelope-body::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 6px;
+}
+
+.envelope-flap {
+    width: 0;
+    height: 0;
+    border-left: 90px solid transparent;
+    border-right: 90px solid transparent;
+    border-top: 70px solid #e8558a;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    transform-origin: top center;
+    transition: transform 0.6s ease;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+.envelope-wrapper:hover .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+.letter {
+    font-size: 48px;
+    animation: letterPeek 2s ease-in-out infinite;
+}
+
+@keyframes letterPeek {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.tap-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: rgba(255,255,255,0.8);
+    animation: fadeInOut 2s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* ============================================
+   QUESTION CONTENT
+   ============================================ */
+.question-content {
+    text-align: center;
+    padding: 20px;
+    max-width: 500px;
+}
+
+.question-content.hidden {
+    display: none;
+}
+
+.question-content.visible {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Heart icon */
+.heart-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 30px;
+}
+
+.pulse-heart {
+    width: 100%;
+    height: 100%;
+    animation: heartPulse 1.2s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.6));
+}
+
+@keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.1); }
+    60% { transform: scale(1); }
+}
+
+/* Title & Text */
+.question-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef, #ff6b9d);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s ease-in-out infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.question-text {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(255, 107, 157, 0.5);
+    margin-bottom: 40px;
+    animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+    from { text-shadow: 0 0 20px rgba(255, 107, 157, 0.3); }
+    to { text-shadow: 0 0 40px rgba(255, 107, 157, 0.8), 0 0 60px rgba(255, 107, 157, 0.4); }
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.buttons-container {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    min-height: 80px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-icon {
+    font-size: 1.3rem;
+}
+
+/* YES button */
+.btn-yes {
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: white;
+    box-shadow: 0 8px 30px rgba(255, 107, 157, 0.45);
+    animation: yesGlow 2s ease-in-out infinite alternate;
+}
+
+.btn-yes::before {
+    background: linear-gradient(135deg, #ff8fb8, #d4567e);
+}
+
+.btn-yes:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 45px rgba(255, 107, 157, 0.65);
+}
+
+.btn-yes:hover::before {
+    opacity: 1;
+}
+
+.btn-yes:active {
+    transform: scale(0.98);
+}
+
+@keyframes yesGlow {
+    from { box-shadow: 0 8px 30px rgba(255, 107, 157, 0.45); }
+    to { box-shadow: 0 8px 45px rgba(255, 107, 157, 0.7), 0 0 60px rgba(255, 107, 157, 0.3); }
+}
+
+/* NO button */
+.btn-no {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    transition: all 0.15s ease;
+    position: absolute;
+}
+
+.btn-no:hover {
+    cursor: not-allowed;
+}
+
+/* ============================================
+   HINT TEXT
+   ============================================ */
+.hint-text {
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+    min-height: 24px;
+    transition: opacity 0.3s ease;
+}
+
+/* ============================================
+   ROSE SCREEN
+   ============================================ */
+.rose-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Rose wrapper */
+.rose-wrapper {
+    position: relative;
+    width: 300px;
+    height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.glow-circle {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    animation: glowPulse 3s ease-in-out infinite;
+    top: 20px;
+}
+
+@keyframes glowPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.2); opacity: 1; }
+}
+
+/* Rose SVG animation */
+.rose-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.6));
+}
+
+.stem {
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    animation: drawStem 1s ease-out 0.3s forwards;
+}
+
+@keyframes drawStem {
+    to { stroke-dashoffset: 0; }
+}
+
+.leaf {
+    opacity: 0;
+    transform-origin: center;
+}
+
+.leaf-left {
+    animation: growLeaf 0.5s ease-out 1s forwards;
+}
+
+.leaf-right {
+    animation: growLeaf 0.5s ease-out 1.2s forwards;
+}
+
+@keyframes growLeaf {
+    from { opacity: 0; transform: scale(0); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.petal-group {
+    transform-origin: 200px 210px;
+}
+
+.petal {
+    opacity: 0;
+    transform-origin: 200px 210px;
+}
+
+.petal-1 { animation: bloomPetal 0.6s ease-out 1.4s forwards; }
+.petal-2 { animation: bloomPetal 0.6s ease-out 1.5s forwards; }
+.petal-3 { animation: bloomPetal 0.6s ease-out 1.6s forwards; }
+.petal-4 { animation: bloomPetal 0.6s ease-out 1.7s forwards; }
+.petal-5 { animation: bloomPetal 0.6s ease-out 1.9s forwards; }
+.petal-6 { animation: bloomPetal 0.6s ease-out 2.0s forwards; }
+.petal-7 { animation: bloomPetal 0.6s ease-out 2.1s forwards; }
+.petal-8 { animation: bloomPetal 0.6s ease-out 2.3s forwards; }
+.petal-9 { animation: bloomPetal 0.6s ease-out 2.4s forwards; }
+.petal-center { animation: bloomPetal 0.6s ease-out 2.6s forwards; }
+
+@keyframes bloomPetal {
+    from {
+        opacity: 0;
+        transform: scale(0) rotate(-30deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.rose-sparkle {
+    opacity: 0;
+    animation: sparkleOn 1.5s ease-in-out 2.8s infinite;
+}
+
+.rose-sparkle.delay-1 {
+    animation-delay: 3.2s;
+}
+
+.rose-sparkle.delay-2 {
+    animation-delay: 3.5s;
+}
+
+@keyframes sparkleOn {
+    0%, 100% { opacity: 0; r: 0; }
+    50% { opacity: 0.9; r: 3; }
+}
+
+/* ============================================
+   PETALS RAIN
+   ============================================ */
+.petals-rain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.falling-petal {
+    position: absolute;
+    top: -30px;
+    width: 20px;
+    height: 24px;
+    background: radial-gradient(ellipse, #ff6b81, #e63946);
+    border-radius: 50% 0 50% 50%;
+    opacity: 0;
+    animation: petalFall linear forwards;
+    filter: blur(0.5px);
+}
+
+@keyframes petalFall {
+    0% {
+        opacity: 0;
+        transform: translateY(0) rotate(0deg) scale(0.6);
+    }
+    10% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(110vh) rotate(720deg) scale(0.3);
+    }
+}
+
+/* ============================================
+   LOVE MESSAGE
+   ============================================ */
+.love-message {
+    text-align: center;
+    margin-top: 10px;
+    opacity: 0;
+    animation: messageAppear 1s ease-out 3s forwards;
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.love-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef, #ff6b9d, #fff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s ease-in-out infinite;
+    margin-bottom: 12px;
+}
+
+.love-subtitle {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+.love-hearts {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+.love-hearts span {
+    animation: heartFloat 2s ease-in-out infinite;
+}
+
+.love-hearts span:nth-child(1) { animation-delay: 0s; }
+.love-hearts span:nth-child(2) { animation-delay: 0.3s; }
+.love-hearts span:nth-child(3) { animation-delay: 0.6s; }
+.love-hearts span:nth-child(4) { animation-delay: 0.9s; }
+.love-hearts span:nth-child(5) { animation-delay: 1.2s; }
+
+@keyframes heartFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-10px) scale(1.15); }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 600px) {
+    .question-title {
+        font-size: 1.7rem;
+    }
+    
+    .question-text {
+        font-size: 1.4rem;
+    }
+    
+    .btn {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+    
+    .rose-wrapper {
+        width: 240px;
+        height: 300px;
+    }
+    
+    .love-title {
+        font-size: 1.8rem;
+    }
+    
+    .love-subtitle {
+        font-size: 0.95rem;
+        padding: 0 15px;
+    }
+    
+    .envelope {
+        width: 150px;
+        height: 110px;
+    }
+    
+    .envelope-flap {
+        border-left-width: 75px;
+        border-right-width: 75px;
+        border-top-width: 60px;
+    }
+}
+
+@media (max-width: 380px) {
+    .question-title {
+        font-size: 1.4rem;
+    }
+    
+    .question-text {
+        font-size: 1.2rem;
+    }
+    
+    .buttons-container {
+        gap: 15px;
+    }
+    
+    .love-title {
+        font-size: 1.5rem;
+    }
+}
